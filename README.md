@@ -3,5 +3,5 @@
 # to install from GitHub
 
 ```
-install_github("DeveloperName/PackageName")
+devtools::install_github("SansamLab/NineSquareShinyApp")
 ```
