@@ -1,9 +1,11 @@
 #' Shiny app server function
-#'
+#' @name shinyAppServer
 #' @param input provided by shiny
 #' @param output provided by shiny
-#'
-
+#' @import MAGeCKFlute
+#' @import ggplot2
+#' @import ggrepel
+#' @import reshape
 
 
 shinyAppServer <- function(input, output) {

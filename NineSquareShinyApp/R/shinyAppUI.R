@@ -1,5 +1,5 @@
 #' Shiny app server object
-#'
+#' @name shinyAppUI
 #' @import shiny
 
 library(shiny)

@@ -1,11 +1,10 @@
 
 #' launches the shinyApp
-#'
+#' @name launchApp
 #' @export launchApp
 #'
 #' @return shiny application object
 #'
-#' @example \dontrun {launchApp()}
 #'
 #' @import shiny
 #'
