@@ -1,7 +1,13 @@
 # NineSquareShinyApp
 
-# to install from GitHub
+# install from GitHub
 
 ```
-devtools::install_github("SansamLab/NineSquareShinyApp")
+devtools::install_github("SansamLab/NineSquareShinyApp/NineSquareShinyApp")
+```
+
+# run app locally
+
+```
+NineSquareShinyApp::launchApp()
 ```
