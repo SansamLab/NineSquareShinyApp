@@ -1,4 +1,3 @@
-
 #' launches the shinyApp
 #' @name launchApp
 #' @export launchApp
@@ -12,8 +11,7 @@
 
 # wrapper for shiny::shinyApp()
 
-library(shiny)
-
 launchApp <- function() {
+  library(shiny)
   shinyApp(ui = shinyAppUI, server = shinyAppServer)
 }

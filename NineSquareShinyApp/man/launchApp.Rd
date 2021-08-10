@@ -3,6 +3,9 @@
 \name{launchApp}
 \alias{launchApp}
 \title{launches the shinyApp}
+\usage{
+launchApp()
+}
 \value{
 shiny application object
 }

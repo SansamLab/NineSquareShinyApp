@@ -2,7 +2,6 @@
 #' @name shinyAppUI
 #' @import shiny
 
-library(shiny)
 shinyAppUI <- shiny::fluidPage(
 
     # Application title
