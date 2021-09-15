@@ -27,7 +27,12 @@ shinyAppUI <- shiny::fluidPage(
                         max = 5,
                         value = 3),
             textInput("GeneToHighlight",
-                      "Single Gene To Highlight")
+                      "Single Gene To Highlight"),
+            sliderInput("axesRanges",
+                        "range of x and y axes",
+                        min=-6,
+                        max=+6,
+                        value=c(-3,3))
         ),
 
         # Show a plot of the generated distribution

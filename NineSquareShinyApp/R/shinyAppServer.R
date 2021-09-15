@@ -59,7 +59,13 @@ shinyAppServer <- function(input, output) {
                                        intercept = MAGeCKFlute::CutoffCalling(df$Diff, input$Cutoff),
                                        groups = c("midleft", "topcenter", "midright", "bottomcenter"),
                                        genelist = c("Rif1"))
-        plt <- plt + ggrepel::geom_label_repel(data = subset(plt$data, Gene == input$GeneToHighlight),ggplot2::aes(label=Gene)) + ggplot2::geom_point(data=subset(plt$data,Gene==input$GeneToHighlight),ggplot2::aes(x=Control,y=Treatment),color="black")
+        plt <- plt +
+            ggrepel::geom_label_repel(data = subset(plt$data, Gene == input$GeneToHighlight),
+                                      ggplot2::aes(label=Gene)) +
+            ggplot2::geom_point(data=subset(plt$data,Gene==input$GeneToHighlight),
+                                ggplot2::aes(x=Control,y=Treatment),color="black") +
+            ggplot2::xlim(input$axesRanges[1],input$axesRanges[2]) +
+            ggplot2::ylim(input$axesRanges[1],input$axesRanges[2])
         plt
     })
 
@@ -209,4 +215,3 @@ shinyAppServer <- function(input, output) {
 
 
 }
-
