@@ -9,11 +9,16 @@
 
 
 shinyAppServer <- function(input, output) {
-
+    options(shiny.maxRequestSize=30*1024^2)
     gdata2 <- reactive({
         req(input$GeneSummary)
         df <- read.table(input$GeneSummary$datapath,header=T)
-        MAGeCKFlute::ReadBeta(df)
+        if(input$filetype=="MAGECKmle Gene Summary"){
+            MAGeCKFlute::ReadBeta(df)
+        }else{
+            df
+        }
+
     })
 
     betaNames <- reactive({
@@ -45,15 +50,15 @@ shinyAppServer <- function(input, output) {
         req(gdata_ccForPlot())
         df <- gdata_ccForPlot()
         plt <- MAGeCKFlute::SquareView(df,
-                                label = "Gene",
-                                ctrlname=input$xChoice,
-                                treatname=input$yChoice,
-                                x_cutoff = MAGeCKFlute::CutoffCalling(df$Control, input$Cutoff),
-                                y_cutoff = MAGeCKFlute::CutoffCalling(df$Treatment, input$Cutoff),
-                                slope = MAGeCKFlute::CutoffCalling(df$Diff, input$Cutoff),
-                                intercept = MAGeCKFlute::CutoffCalling(df$Diff, input$Cutoff),
-                                groups = c("midleft", "topcenter", "midright", "bottomcenter"),
-                                genelist = c("Rif1"))
+                                       label = "Gene",
+                                       ctrlname=input$xChoice,
+                                       treatname=input$yChoice,
+                                       x_cutoff = MAGeCKFlute::CutoffCalling(df$Control, input$Cutoff),
+                                       y_cutoff = MAGeCKFlute::CutoffCalling(df$Treatment, input$Cutoff),
+                                       slope = MAGeCKFlute::CutoffCalling(df$Diff, input$Cutoff),
+                                       intercept = MAGeCKFlute::CutoffCalling(df$Diff, input$Cutoff),
+                                       groups = c("midleft", "topcenter", "midright", "bottomcenter"),
+                                       genelist = c("Rif1"))
         plt <- plt + ggrepel::geom_label_repel(data = subset(plt$data, Gene == input$GeneToHighlight),ggplot2::aes(label=Gene)) + ggplot2::geom_point(data=subset(plt$data,Gene==input$GeneToHighlight),ggplot2::aes(x=Control,y=Treatment),color="black")
         plt
     })
@@ -107,14 +112,14 @@ shinyAppServer <- function(input, output) {
     output$preNormPlot <- renderPlot({
         req(gdata2())
         req(input$xChoice)
-            df <- reshape::melt(gdata2())
-            df <- df[grep(paste(input$xChoice,input$yChoice,sep="|"),df$variable),]
-            ggplot2::ggplot(data=df,
-                            ggplot2::aes(x=value,
-                                         color=variable)) +
-                ggplot2::geom_density() +
-                ggplot2::ggtitle("Before Normalization") +
-                ggplot2::xlab("beta score")
+        df <- reshape::melt(gdata2())
+        df <- df[grep(paste(input$xChoice,input$yChoice,sep="|"),df$variable),]
+        ggplot2::ggplot(data=df,
+                        ggplot2::aes(x=value,
+                                     color=variable)) +
+            ggplot2::geom_density() +
+            ggplot2::ggtitle("Before Normalization") +
+            ggplot2::xlab("beta score")
     })
 
     #to compare density of the normalized betas
@@ -129,7 +134,7 @@ shinyAppServer <- function(input, output) {
             ggplot2::geom_density() +
             ggplot2::ggtitle("After Normalization") +
             ggplot2::xlab("beta score")
-        })
+    })
 
     output$nineSquarePlot <- renderPlot({
         req(nineSquarePlot())
